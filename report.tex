@@ -1,0 +1,249 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb, mathrsfs}
+\usepackage{braket}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{myblue}{rgb}{0,0,0.8}
+
+\lstdefinestyle{MATLAB}{
+    language=Matlab,
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{myblue},
+    commentstyle=\color{mygreen},
+    stringstyle=\color{mygray},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    stepnumber=1,
+    numbersep=5pt,
+    backgroundcolor=\color{white},
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    frame=single,
+    tabsize=2,
+    captionpos=b,
+    breaklines=true,
+    breakatwhitespace=false,
+}
+
+\title{Analysis of the Focusing NLS}
+\author{Jack Murphy}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+The focusing cubic nonlinear Schrödinger equation (NLS) describes wave propagation in nonlinear media:
+\begin{equation} \label{eq:nls}
+i u_t + \Delta u + |u|^2 u = 0
+\end{equation}
+where $u(x,t)$ is a complex-valued field. This equation models phenomena in nonlinear optics, Bose-Einstein condensates, and hydrodynamics. 
+
+\section{Key Properties}
+\begin{itemize}
+    \item \textbf{Solitons}: Exact solutions exist of the form:
+    \begin{equation*}
+        u(x,t) = A\,\text{sech}(B(x-x_0))e^{iv(x - x_0)}
+    \end{equation*}
+    These are called solitons. A \textbf{soliton} is a nonlinear, self-reinforcing, localized wave packet that is strongly stable.
+    
+    \item \textbf{Elastic Collisions}: Solitons interact cleanly, preserving their form with only phase shifts.
+\end{itemize}
+
+\section{Conservation Laws}
+
+\subsection{Mass Conservation}
+
+Define the mass functional:
+\[
+M(t) = \int_{-\infty}^\infty |u(x,t)|^2 \, dx
+     = \int_{-\infty}^\infty u(x,t)\,\overline{u}(x,t)\,dx.
+\]
+
+\noindent Take the time derivative:
+\begin{align*}
+\frac{dM}{dt}
+&= \int_{-\infty}^\infty \frac{\partial}{\partial t}\bigl[u\,\overline{u}\bigr]\,dx \\
+&= \int_{-\infty}^\infty \bigl(u_t\,\overline{u} + u\,\overline{u}_t\bigr)\,dx.
+\end{align*}
+
+\noindent Substitute \(u_t\) from the NLS (\(i\,u_t = -u_{xx}-|u|^2u\)) and its conjugate:
+\begin{align*}
+u_t           &= i\,u_{xx} + i\,|u|^2u,\\
+\overline{u}_t &= -i\,\overline{u}_{xx} - i\,|u|^2\overline{u}.
+\end{align*}
+
+\noindent Insert into the integral:
+\begin{align*}
+\frac{dM}{dt}
+&= \int_{-\infty}^\infty 
+   \bigl[(i\,u_{xx}+i\,|u|^2u)\,\overline{u}
+        + u\,(-i\,\overline{u}_{xx}-i\,|u|^2\overline{u})\bigr]\,dx\\
+&= i\int_{-\infty}^\infty \bigl[u_{xx}\,\overline{u}-u\,\overline{u}_{xx}\bigr]\,dx
+  \quad\text{(the $|u|^2$ terms cancel).}
+\end{align*}
+
+\noindent Integrate by parts on the first term:
+\[
+\int_{-\infty}^\infty u_{xx}\,\overline{u}\,dx
+= \bigl[u_x\,\overline{u}\bigr]_{-\infty}^{\infty}
+  - \int_{-\infty}^\infty u_x\,\overline{u}_x\,dx
+= -\int_{-\infty}^\infty u_x\,\overline{u}_x\,dx,
+\]
+and similarly
+\[
+\int_{-\infty}^\infty u\,\overline{u}_{xx}\,dx
+= \bigl[u\,\overline{u}_x\bigr]_{-\infty}^{\infty}
+  - \int_{-\infty}^\infty \overline{u}_x\,u_x\,dx
+= -\int_{-\infty}^\infty |u_x|^2\,dx.
+\]
+
+\noindent Thus
+\begin{align*}
+\frac{dM}{dt}
+&= i\Bigl[-\!\!\int_{-\infty}^\infty |u_x|^2\,dx
+       -\!\!\bigl(-\!\!\int_{-\infty}^\infty |u_x|^2\,dx\bigr)\Bigr]\\
+&= i*0  \\
+&=0.
+\end{align*}
+  Therefore
+\[
+\frac{dM}{dt} = 0
+\quad\text{for all }t>0.
+\]
+
+\subsection{Energy Conservation}
+
+\subsubsection*{Energy Functional Definition}
+
+The Hamiltonian (total energy) for the focusing NLS is
+\[
+H[u]
+:= \underbrace{\int_{-\infty}^\infty |u_x|^2\,dx}_{\text{Kinetic Energy}}
+   \;-\;\underbrace{\tfrac12\displaystyle\int_{-\infty}^\infty |u|^4\,dx}_{\text{Nonlinear Potential Energy}}.
+\]
+
+\subsubsection*{Time Derivative Calculation}
+
+Differentiate \(H\) in time:
+\begin{align*}
+\frac{dH}{dt}
+&= \frac{d}{dt}\Bigl(\int |u_x|^2\,dx - \tfrac12\int |u|^4\,dx\Bigr)\\
+&= \int \frac{\partial}{\partial t}|u_x|^2\,dx
+  - \tfrac12\!\int \frac{\partial}{\partial t}|u|^4\,dx.
+\end{align*}
+Using the chain rule,
+\begin{align*}
+\frac{\partial}{\partial t}|u_x|^2
+&= \frac{\partial}{\partial t}(u_x\bar u_x)
+= u_{xt}\bar u_x + u_x\bar u_{xt}
+= 2\,\Re(\bar u_x\,u_{xt}),\\
+\frac{\partial}{\partial t}|u|^4
+&= \frac{\partial}{\partial t}(|u|^2)^2
+= 2|u|^2\,\frac{\partial}{\partial t}|u|^2
+= 2|u|^2(\bar u\,u_t + u\,\bar u_t)
+= 4|u|^2\,\Re(\bar u\,u_t).
+\end{align*}
+Hence
+\[
+\frac{dH}{dt}
+= 2\,\Re\!\int \bar u_x\,u_{xt}\,dx
+  - 2\,\Re\!\int |u|^2\,\bar u\,u_t\,dx.
+\]
+
+\subsubsection*{Integration by Parts}
+
+For the first integral,
+\begin{align*}
+\int_{-\infty}^\infty \bar u_x\,u_{xt}\,dx
+&= \bigl[\bar u_x\,u_t\bigr]_{-\infty}^\infty
+  - \int_{-\infty}^\infty \bar u_{xx}\,u_t\,dx
+= -\int_{-\infty}^\infty \bar u_{xx}\,u_t\,dx.
+\end{align*}
+Thus
+\[
+\frac{dH}{dt}
+= -2\,\Re\!\int \bar u_{xx}\,u_t\,dx
+  - 2\,\Re\!\int |u|^2\,\bar u\,u_t\,dx.
+\]
+
+\subsubsection*{Using the NLS Equation}
+
+From 
+\[
+i\,u_t = -u_{xx} - |u|^2 u
+\quad\Longrightarrow\quad
+\bar u_{xx} + |u|^2\bar u = -i\,\bar u_t,
+\]
+we substitute and get
+\begin{align*}
+\frac{dH}{dt}
+&= -2\,\Re\!\int \bigl(\bar u_{xx}+|u|^2\bar u\bigr)\,u_t\,dx
+= -2\,\Re\!\int (-i\bar u_t)\,u_t\,dx
+= 2\,\Re\!\int i\,|u_t|^2\,dx.
+\end{align*}
+
+\subsubsection*{Final Evaluation}
+
+Since \(i\,|u_t|^2\) is purely imaginary,
+\[
+\Re\!\bigl(i\,|u_t|^2\bigr)=0,
+\]
+it follows that
+\[
+\frac{dH}{dt}=0,
+\]
+so energy is conserved:
+\[ \frac{dH}{dt}\equiv 0 \quad\text{for all }t>0.
+\]
+
+\section{Fourier Representation}
+
+Transforming the NLS to Fourier space yields:
+\[
+i\,\hat u_t + k^2\,\hat u - \mathscr{F}\!\bigl[\,|u|^2 u\bigr] = 0,
+\]
+or equivalently
+\[
+i\,\hat u_t = -\,k^2\,\hat u + \mathscr{F}[\,|u|^2 u].
+\]
+The term \(-k^2\hat u\) is “stiff” for large \(|k|\), making explicit time‐stepping restrictive. We handle this using a method found in Trefethen's \textit{ Spectral Methods in Matlab.} More precisely, this method involves using an integrating factor. So we define the integrating‐factor variable
+\[
+v(k,t) \;=\; e^{\,-i k^2 t}\,\hat u(k,t).
+\]
+Differentiating,
+\[
+\frac{d}{dt}v
+= -i\,k^2\,e^{-ik^2 t}\hat u + e^{-ik^2 t}\hat u_t
+= e^{-ik^2 t}\bigl(-i\,k^2\,\hat u + \hat u_t\bigr).
+\]
+Using the Fourier‐space NLS,
+\[
+\hat u_t = \,i\,k^2\,\hat u - i\,\mathscr{F}[\,|u|^2 u],
+\]
+we obtain
+\[
+\frac{d}{dt}v
+= e^{-ik^2t}\,\bigl(-i\,k^2\,\hat u +\,i\,k^2\,\hat u - i\,\mathscr{F}[\,|u|^2 u]\bigr)
+= -i\,e^{-ik^2t}\,\mathscr{F}\!\bigl[\,|u|^2 u\bigr].
+\]
+Re‐expressing \(u = \mathscr{F}^{-1}(e^{ik^2t}v)\), the final form is
+\[
+\frac{d}{dt}v(k,t)
+= -\,i\,e^{-ik^2t}\,\mathscr{F}\!\Bigl[\bigl|\mathscr{F}^{-1}[e^{ik^2t}v]\bigr|^2\,\mathscr{F}^{-1}[e^{ik^2t}v]\Bigr].
+\]
+\begin{itemize}
+  \item \emph{Exact linear integration:} the factor \(e^{ik^2t}\) removes the stiff \(k^2\) term.
+  \item \emph{Non‐stiff nonlinear evolution:} only the cubic nonlinearity remains to be stepped in time.
+\end{itemize}
+
+\medskip
+
+\noindent \textbf{This yields the formulation which we implement in our simulation. }
+
+
+\end{document}
