@@ -32,5 +32,5 @@ This repository includes numerical experiments and diagnostics consistent with t
 ├── README.md
 ├── src/                # solver + helper functions
 ├── scripts/            # runnable experiments
-├── figures/            # saved plots (optional, but recommended)
+├── figures/            # saved plots
 └── report/             # write-up / derivations
