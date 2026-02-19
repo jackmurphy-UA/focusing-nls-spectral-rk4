@@ -6,7 +6,7 @@ i u_t + u_{xx} + |u|^2 u = 0,
 \]
 using a **Fourier spectral method (FFT)** in space and an **integrating-factor formulation** stepped forward in time with **RK4**.
 
-The solver is designed to study **soliton dynamics** (including two-soliton collisions) and to monitor **conservation laws** numerically.
+The solver is designed to examine **soliton dynamics** (including two-soliton collisions) and to monitor **conservation laws** numerically.
 
 ## Highlights
 - Fourier spectral discretization (FFT/IFFT) on a periodic spatial grid
