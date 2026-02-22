@@ -1,6 +1,6 @@
 % Run two-soliton collision demo
 
-addpath(genpath(fullfile(fileparts(mfilename('fullpath')), '..', 'src')));
+% addpath?
 
 p = nls_default_params();
 p.ic   = "two_soliton";
