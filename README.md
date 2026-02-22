@@ -15,7 +15,7 @@ The solver is designed to examine **soliton dynamics** (including two-soliton co
 - Example setups: single soliton, two-soliton collision
 - Diagnostic: mass conservation (with optional extension to energy)
 
-## Mathematical background
+## Mathematical Background
 The focusing NLS admits localized soliton solutions and possesses conserved quantities such as **mass**
 \[
 M(t) = \int |u(x,t)|^2\,dx
@@ -25,6 +25,9 @@ and **energy**
 H[u] = \int |u_x|^2\,dx - \frac{1}{2}\int |u|^4\,dx.
 \]
 This repository includes numerical experiments and diagnostics consistent with these invariants.
+
+## Future Directions
+Verification + Convergence study: compare numerical solution to exact 1 soliton shape and phase, and quantify $L^\inf,L^2$ error
 
 ## Repository structure
 ```text
