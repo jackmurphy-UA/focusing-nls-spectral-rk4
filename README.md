@@ -27,7 +27,12 @@ H[u] = \int |u_x|^2\,dx - \frac{1}{2}\int |u|^4\,dx.
 This repository includes numerical experiments and diagnostics consistent with these invariants.
 
 ## Future Directions
-Verification + Convergence study: compare numerical solution to exact 1 soliton shape and phase, and quantify $L^\inf,L^2$ error
+Verification + Convergence study: compare numerical solution to exact 1 soliton shape and phase, and quantify $L^\infty,L^2$ error, measure mass/energy drift vs dt and vs N to investigate convergence
+Structure preserving integrators (Strang, Yoshida-style)
+Dealiasing (2/3) and spectral diagnostics
+Could also track Hamiltonain/energy and momentum
+Perturbed NLS: add weak damping/forcing and see how behaviors changes
+
 
 ## Repository structure
 ```text
