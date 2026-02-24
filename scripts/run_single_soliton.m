@@ -1,5 +1,5 @@
 % scripts/run_single_soliton.m
-% Single-soliton evolution for focusing cubic NLS
+% Single-soliton evolution for the focusing cubic NLS
 
 addpath(genpath(fullfile(fileparts(mfilename('fullpath')), '..', 'src')));
 
