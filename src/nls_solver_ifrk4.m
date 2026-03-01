@@ -10,6 +10,8 @@ function out = nls_solver_ifrk4(p)
 %   Output:
 %     out struct: x, t, u (complex), uabs, mass, params
 
+% Future work: priority next step is dealiasing
+
     arguments
         p struct
     end
