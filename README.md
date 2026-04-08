@@ -29,9 +29,10 @@ This repository includes numerical experiments and diagnostics consistent with t
 ## Future Directions
 - Verification + Convergence study: compare numerical solution to exact 1 soliton shape and phase, and quantify $L^\infty,L^2$ error; measure mass/energy drift vs dt and vs N to investigate convergence
 - Structure preserving integrators (Strang, Yoshida-style)
-- Dealiasing (2/3) and spectral diagnostics
+- Dealiasing (2/3)
+- Spectral diagnostics
 - Could also track Hamiltonain/energy and momentum
-- Perturbed NLS: add weak damping/forcing and see how behaviors changes
+- Perturbed NLS: add weak damping/forcing and see the how behaviors changes
 
 
 ## Repository structure
